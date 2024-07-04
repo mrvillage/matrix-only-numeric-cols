@@ -11,6 +11,7 @@ fn matrix_is_numeric(files: Vec<String>, output: &Path) {
     let mut non_numeric = HashSet::new();
     let _ = headers;
     for file in files {
+        println!("Processing file: {}", file);
         let mut reader = csv::ReaderBuilder::new()
             .delimiter(b'\t')
             .from_reader(std::fs::File::open(&file).unwrap());
@@ -32,6 +33,7 @@ fn matrix_is_numeric(files: Vec<String>, output: &Path) {
             data.push(record);
         }
     }
+    println!("Writing to: {:?}", output);
     let mut writer = csv::WriterBuilder::new()
         .delimiter(b',')
         .from_writer(std::fs::File::create(output).unwrap());
