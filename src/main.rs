@@ -27,7 +27,7 @@ fn matrix_is_numeric(reader: impl std::io::Read, output: &Path) {
         data.push(record);
     }
     let mut writer = csv::WriterBuilder::new()
-        .delimiter(b'\t')
+        .delimiter(b',')
         .from_writer(std::fs::File::create(output).unwrap());
     if let Some(colnames) = colnames {
         let colnames = colnames
