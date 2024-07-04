@@ -30,6 +30,17 @@ fn matrix_is_numeric(reader: impl std::io::Read, output: &Path) {
         .delimiter(b'\t')
         .from_writer(std::fs::File::create(output).unwrap());
     if let Some(colnames) = colnames {
+        let colnames = colnames
+            .iter()
+            .enumerate()
+            .filter_map(|(i, x)| {
+                if non_numeric.contains(&i) {
+                    None
+                } else {
+                    Some(x)
+                }
+            })
+            .collect::<Vec<_>>();
         writer.write_record(&colnames).unwrap();
     }
     for record in data {
